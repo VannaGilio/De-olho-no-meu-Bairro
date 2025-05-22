@@ -113,7 +113,6 @@ const listarUsuario = async function () {
                     itemUsuario.estado = dadosEstado.estado
 
                     arrayUsuario.push(itemUsuario)
-                    console.log(itemUsuario)
                 }
 
                 dadosUsuario.users = arrayUsuario
@@ -141,6 +140,8 @@ const buscarUsuario = async function (id) {
 
             if (result != false || typeof (result) == 'object') {
                 if (result > 0) {
+                    console.log(result)
+
                     dadosUsuario.status = true
                     dadosUsuario.status_code = 200
                     dadosUsuario.itens = result.length

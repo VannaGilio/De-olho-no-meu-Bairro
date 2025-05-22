@@ -8,7 +8,9 @@ app.use((request, response, next) => {
     response.header('Access-Control-Allow-Origin', '*')
     response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
 
-    app.use(cors())
+    app.use(cors({
+        origin: 'http://127.0.0.1:5500'
+    }))
     next()
 })
 
@@ -45,7 +47,7 @@ app.delete('/v1/controle-usuario/usuario/:id', cors(), async function (request, 
     response.status(result.status_code)
     response.json(result)
 })
-app.put('/v1/controle-filmes/filme/:id', cors(), bodyParserJSON, async function (request, response){
+app.put('/v1/controle-usuario/usuario/:id', cors(), bodyParserJSON, async function (request, response){
     let contentType = request.headers['content-type']
    
     let idUsuario = request.params.id
@@ -59,7 +61,7 @@ app.put('/v1/controle-filmes/filme/:id', cors(), bodyParserJSON, async function 
 })
 
 const controllerEstado = require('./controller/controllerEstado.js')
-app.post('/v1/controle-usuario/estado', cors(), bodyParserJSON, async function(request, response) {
+app.post('/v1/controle-estado/estado', cors(), bodyParserJSON, async function(request, response) {
 
     let contentType = request.headers['content-type']
     let dadosBody = request.body   
@@ -76,8 +78,35 @@ app.get('/v1/controle-estado/estado', cors(), async function(request, response){
     response.status(result.status_code)
     response.json(result)
 })
+app.get('/v1/controle-estado/estado/:id', cors(), async function (request, response){
 
-app.listen('3030', function(){
+    let idEstado = request.params.id
+    let result = await controllerEstado.buscarEstado(idEstado)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.delete('/v1/controle-estado/estado/:id', cors(), async function (request, response){
+    let idEstado = request.params.id
+    let result = await controllerEstado.excluirEstado(idEstado)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.put('/v1/controle-estado/estado/:id', cors(), bodyParserJSON, async function (request, response){
+    let contentType = request.headers['content-type']
+   
+    let idEstado = request.params.id
+
+    let dadosBody = request.body
+
+    let result = await controllerEstado.atualizarEstado(idEstado, dadosBody, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.listen('3030', '0.0.0.0', function(){
     console.log('API funcionando...')
 })
 
