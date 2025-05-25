@@ -1,14 +1,12 @@
 const message = require('../modulo/config.js')
 const usuarioDAO = require('../model/DAO/usuario')
-const controllerEstado = require('../controller/controllerEstado.js')
 
 const inserirUsuario = async function (usuario, contentType) {
     try {
         if (String(contentType).toLowerCase() == 'application/json') {
             if (usuario.nome == "" || usuario.nome == null || usuario.nome == undefined || usuario.nome.length > 200 ||
                 usuario.email == "" || usuario.email == null || usuario.email == undefined || usuario.email.length > 200 ||
-                usuario.senha == "" || usuario.senha == null || usuario.senha == undefined || usuario.senha.length > 50 ||
-                usuario.id_estado == "" || usuario.id_estado == null || usuario.id_estado == undefined || usuario.id_estado.length <= 0
+                usuario.senha == "" || usuario.senha == null || usuario.senha == undefined || usuario.senha.length > 50
             ) {
                 return message.ERROR_REQUIRED_FIELDS
             } else {
@@ -30,15 +28,15 @@ const inserirUsuario = async function (usuario, contentType) {
 
 const atualizarUsuario = async function (id, contentType, usuario) {
     try {
-        if (String(contentType).toLowerCase() == 'application/json') {
+        if (String(contentType) == 'application/json') {
             if (id == "" || id == null || id == undefined || id.length <= 0 || isNaN(id) ||
                 usuario.nome == "" || usuario.nome == null || usuario.nome == undefined || usuario.nome.length > 200 ||
                 usuario.email == "" || usuario.email == null || usuario.email == undefined || usuario.email.length > 200 ||
-                usuario.senha == "" || usuario.senha == null || usuario.senha == undefined || usuario.senha.length > 50 ||
-                usuario.id_estado == "" || usuario.id_estado == null || usuario.id_estado == undefined || usuario.id_estado.length <= 0
+                usuario.senha == "" || usuario.senha == null || usuario.senha == undefined || usuario.senha.length > 50
             ) {
                 return message.ERROR_REQUIRED_FIELDS
             } else {
+
                 let resultUsuario = await usuarioDAO.selectByIdUsuario(parseInt(id))
 
                 if (resultUsuario != false || typeof (resultUsuario) == 'object') {
@@ -52,19 +50,20 @@ const atualizarUsuario = async function (id, contentType, usuario) {
                             return message.ERROR_INTERNAL_SERVER_MODEL
                         }
                     } else {
-                        message.ERROR_NOT_FOUND
+                        return message.ERROR_NOT_FOUND
                     }
                 } else {
-                    message.ERROR_INTERNAL_SERVER_MODEL
+                    return message.ERROR_INTERNAL_SERVER_MODEL
                 }
             }
         } else {
-            message.ERROR_CONTENT_TYPE
+            return message.ERROR_CONTENT_TYPE
         }
     } catch (error) {
         return message.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
+
 
 const excluirUsuario = async function (id) {
     try {
@@ -74,7 +73,7 @@ const excluirUsuario = async function (id) {
             let resultUsuario = await usuarioDAO.selectByIdUsuario(parseInt(id))
 
             if (resultUsuario != false || typeof (resultUsuario) == 'object') {
-                if (resultUsuario > 0) {
+                if (resultUsuario.length > 0) {
                     let result = await usuarioDAO.deleteUsuario(parseInt(id))
 
                     if (result) {
@@ -96,7 +95,6 @@ const excluirUsuario = async function (id) {
 
 const listarUsuario = async function () {
     try {
-        let arrayUsuario = []
         let dadosUsuario = {}
 
         let result = await usuarioDAO.selectAllUsuario()
@@ -107,15 +105,6 @@ const listarUsuario = async function () {
                 dadosUsuario.status_code = 200
                 dadosUsuario.itens = result.length
                 dadosUsuario.users = result
-
-                for (const itemUsuario of result) {
-                    let dadosEstado = await controllerEstado.buscarEstado(itemUsuario.id_estado)
-                    itemUsuario.estado = dadosEstado.estado
-
-                    arrayUsuario.push(itemUsuario)
-                }
-
-                dadosUsuario.users = arrayUsuario
 
                 return dadosUsuario
             } else {
@@ -131,7 +120,6 @@ const listarUsuario = async function () {
 
 const buscarUsuario = async function (id) {
     try {
-        let arrayUsuario = []
         if (id == "" || id == null || id == undefined || id.length <= 0 || isNaN(id)) {
             return message.ERROR_REQUIRED_FIELDS
         } else {
@@ -139,24 +127,13 @@ const buscarUsuario = async function (id) {
             let result = await usuarioDAO.selectByIdUsuario(id)
 
             if (result != false || typeof (result) == 'object') {
-                if (result > 0) {
-                    console.log(result)
+                if (result.length > 0) {
 
                     dadosUsuario.status = true
                     dadosUsuario.status_code = 200
                     dadosUsuario.itens = result.length
-                    dadosUsuario.usuario = result
+                    dadosUsuario.users = result
 
-                    for (const itemUsuario of result) {
-                        let dadosEstado = await controllerEstado.buscarEstado(itemUsuario.id_estado)
-                        itemUsuario.estado = dadosEstado.estado
-
-                        arrayUsuario.push(itemUsuario)
-                    }
-
-                    dadosUsuario.users = arrayUsuario
-
-                    
                     return dadosUsuario
                 } else {
                     return message.ERROR_NOT_FOUND
@@ -170,10 +147,42 @@ const buscarUsuario = async function (id) {
     }
 }
 
+const autenticarUsuario = async function (usuario) {
+    try {
+        if (usuario.email == "" || usuario.email == undefined || usuario.email == null || usuario.email.length >= 200 ||
+            usuario.email == "" || usuario.email == undefined || usuario.email == null || usuario.email.length >= 200
+        ) {
+            return message.ERROR_REQUIRED_FIELDS
+        } else {
+            let dados = {}
+            let result = await usuarioDAO.selectUsuarioByEmailAndSenha(usuario)
+
+            if (result != false || typeof (result) == 'object') {
+                if (result.length > 0) {
+
+                    dados.status = true
+                    dados.status_code = 200
+                    dados.itens = result.length
+                    dados.users = result
+                    
+                    return dados
+                } else {
+                    return message.ERROR_NOT_FOUND
+                }
+            }else{
+                return message.ERROR_INTERNAL_SERVER_MODEL
+            }
+        }
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
 module.exports = {
     inserirUsuario,
     atualizarUsuario,
     excluirUsuario,
     listarUsuario,
-    buscarUsuario
+    buscarUsuario,
+    autenticarUsuario
 }

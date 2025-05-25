@@ -6,13 +6,11 @@ const insertUsuario = async function (usuario) {
         let sql = `insert into tbl_usuario (
                                                 nome,
                                                 email,
-                                                senha,
-                                                id_estado
+                                                senha
                                             )values(
                                                 '${usuario.nome}',
                                                 '${usuario.email}',
-                                                '${usuario.senha}',
-                                                '${usuario.id_estado}'
+                                                '${usuario.senha}'
                                             );`
 
         let result = await prisma.$executeRawUnsafe(sql)
@@ -29,10 +27,9 @@ const updateUsuario = async function (usuario) {
     try {
         let sql = `update tbl_usuario set   nome = '${usuario.nome}',
                                             email = '${usuario.email}',
-                                            senha = '${usuario.senha}',
-                                            id_estado = '${usuario.id_estado}'
+                                            senha = '${usuario.senha}'
 
-                                            where id_usuario = '${usuario.id_usuario}'`
+                                            where id_usuario = '${usuario.id_usuario}';`
 
          let result = await prisma.$executeRawUnsafe(sql)
          if(result)
@@ -40,13 +37,13 @@ const updateUsuario = async function (usuario) {
         else 
             return false                                   
     } catch (error) {
-        return false
+        return false 
     }
 }
 
 const deleteUsuario = async function (id) {
     try {
-        let sql = `delete from tbl_usuario where id_usuario = ${id}`
+        let sql = `delete from tbl_usuario where id_usuario = ${id};`
 
         let result = await prisma.$executeRawUnsafe(sql)
         if(result)
@@ -60,7 +57,7 @@ const deleteUsuario = async function (id) {
 
 const selectAllUsuario = async function () {
     try {
-        let sql = `select * from tbl_usuario order by id_usuario desc`
+        let sql = `select * from tbl_usuario order by id_usuario desc;`
 
         let result = await prisma.$queryRawUnsafe(sql)
         if(result)
@@ -74,7 +71,7 @@ const selectAllUsuario = async function () {
 
 const selectByIdUsuario = async function (id){
     try {
-        let sql = `select * from tbl_usuario where id_usuario = ${id}`
+        let sql = `select * from tbl_usuario where id_usuario = ${id};`
 
         let result = await prisma.$queryRawUnsafe(sql)
         if(result)
@@ -86,10 +83,27 @@ const selectByIdUsuario = async function (id){
     }
 }
 
+const selectUsuarioByEmailAndSenha = async function (usuario) {
+    try {
+        let sql = `select * from tbl_usuario where email = '${usuario.email}' and senha = '${usuario.senha}'`
+
+        let result = await prisma.$queryRawUnsafe(sql)
+        
+        if(result)
+            return result
+        else
+            return false
+    } catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
 module.exports = {
     insertUsuario,
     updateUsuario,
     deleteUsuario,
     selectAllUsuario,
-    selectByIdUsuario
+    selectByIdUsuario,
+    selectUsuarioByEmailAndSenha
 }
