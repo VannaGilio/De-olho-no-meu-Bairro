@@ -78,6 +78,14 @@ app.post('/v1/controle-usuario/login', cors(), async function (request, response
     response.status(result.status_code)
     response.json(result)
 })
+app.post('/v1/controle-usuario/usuario/email', cors(), async function (request, response) {
+    let usuario = request.body
+
+    let result = await controllerUsuario.busucarUsuarioPorEmail(usuario)
+
+    response.status(result.status_code)
+    response.json(result)
+})
 
 app.listen('3030', '0.0.0.0', function () {
     console.log('API funcionando...')

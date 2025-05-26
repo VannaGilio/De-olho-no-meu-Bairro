@@ -99,11 +99,28 @@ const selectUsuarioByEmailAndSenha = async function (usuario) {
     }
 }
 
+const selectUsuarioByEmail = async function (usuario) {
+    try {
+        let sql = `select * from tbl_usuario where email = '${usuario.email}'`
+
+        let result = await prisma.$queryRawUnsafe(sql)
+        
+        if(result)
+            return result
+        else
+            return false
+    } catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
 module.exports = {
     insertUsuario,
     updateUsuario,
     deleteUsuario,
     selectAllUsuario,
     selectByIdUsuario,
-    selectUsuarioByEmailAndSenha
+    selectUsuarioByEmailAndSenha,
+    selectUsuarioByEmail
 }

@@ -150,12 +150,43 @@ const buscarUsuario = async function (id) {
 const autenticarUsuario = async function (usuario) {
     try {
         if (usuario.email == "" || usuario.email == undefined || usuario.email == null || usuario.email.length >= 200 ||
-            usuario.email == "" || usuario.email == undefined || usuario.email == null || usuario.email.length >= 200
+            usuario.senha == "" || usuario.senha == undefined || usuario.senha == null || usuario.senha.length >= 200
         ) {
             return message.ERROR_REQUIRED_FIELDS
         } else {
             let dados = {}
             let result = await usuarioDAO.selectUsuarioByEmailAndSenha(usuario)
+
+            if (result != false || typeof (result) == 'object') {
+                if (result.length > 0) {
+
+                    dados.status = true
+                    dados.status_code = 200
+                    dados.itens = result.length
+                    dados.users = result
+                    
+                    return dados
+                } else {
+                    return message.ERROR_NOT_FOUND
+                }
+            }else{
+                return message.ERROR_INTERNAL_SERVER_MODEL
+            }
+        }
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
+
+const busucarUsuarioPorEmail = async function (usuario) {
+    try {
+        if (usuario.email == "" || usuario.email == undefined || usuario.email == null || usuario.email.length >= 200 
+        ){
+            return message.ERROR_REQUIRED_FIELDS
+        } else {
+            let dados = {}
+            let result = await usuarioDAO.selectUsuarioByEmail(usuario)
 
             if (result != false || typeof (result) == 'object') {
                 if (result.length > 0) {
@@ -184,5 +215,6 @@ module.exports = {
     excluirUsuario,
     listarUsuario,
     buscarUsuario,
-    autenticarUsuario
+    autenticarUsuario,
+    busucarUsuarioPorEmail
 }
