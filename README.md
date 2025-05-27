@@ -13,6 +13,19 @@ A API *Reporter do Meu Bairro* permite o cadastro, consulta, atualização e exc
 
 ---
 
+## 📎 Observações
+### 🔹 Para criar e utilizar a API precisamos instalar:
+
+#### express     - comando: npm install express --save
+#### cors        - comando: npm install cors --save
+#### body-parser - comando: npm install body-parser --save
+
+#### prisma        - comando: npm install prisma --save
+#### prisma/client - comando: npm install @prisma/client --save
+
+#### npx prisma migrate dev
+#### npx prisma init 
+
 ## 📌 Endpoints
 
 ### 🔹 Criar Usuário
@@ -42,7 +55,7 @@ Cadastra um novo usuário no sistema.
 
 ### 🔹 Listar Todos os Usuários
 
-**GET /usuarios**  
+**GET /v1/controle-usuario/usuario**  
 Retorna todos os usuários cadastrados.
 
 #### 📤 Resposta:
@@ -72,7 +85,7 @@ Retorna todos os usuários cadastrados.
 
 ### 🔹 Listar Usuário por ID
 
-**GET /usuarios/:id**  
+**GET /v1/controle-usuario/usuario/:id**  
 Retorna um usuário específico pelo seu ID.
 
 #### 📌 Exemplo:
@@ -99,8 +112,11 @@ Retorna um usuário específico pelo seu ID.
 
 ### 🔹 Atualizar Usuário
 
-**PUT /usuarios/:id**  
+**PUT /v1/controle-usuario/usuario/:id**  
 Atualiza os dados de um usuário específico.
+
+#### 📌 Exemplo:
+`PUT /usuarios/4`
 
 #### 📥 Corpo da Requisição:
 ```json
@@ -124,8 +140,11 @@ Atualiza os dados de um usuário específico.
 
 ### 🔹 Deletar Usuário
 
-**DELETE /usuarios/:id**  
+**DELETE /v1/controle-usuario/usuario/:id**  
 Remove um usuário do sistema.
+
+#### 📌 Exemplo:
+`DELETE /usuarios/4`
 
 #### 📤 Resposta:
 ```json
@@ -133,18 +152,6 @@ Remove um usuário do sistema.
   "status": true,
   "status_code": 200,
   "message": "Item excluído com sucesso!!!"
-}
-```
-
----
-
-## ⚠️ Erros Comuns (exemplo)
-
-```json
-{
-  "status": false,
-  "status_code": 400,
-  "message": "Email já cadastrado"
 }
 ```
 
