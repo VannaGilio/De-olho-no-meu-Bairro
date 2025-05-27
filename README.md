@@ -16,15 +16,26 @@ A API *Reporter do Meu Bairro* permite o cadastro, consulta, atualização e exc
 ## 📎 Observações
 ### 🔹 Para criar e utilizar a API precisamos instalar:
 
-#### express     - comando: npm install express --save
-#### cors        - comando: npm install cors --save
-#### body-parser - comando: npm install body-parser --save
-
-#### prisma        - comando: npm install prisma --save
-#### prisma/client - comando: npm install @prisma/client --save
-
-#### npx prisma migrate dev
-#### npx prisma init 
+### express - comando: npm install express --save
+#### Framework para Node.js que facilita a criação de servidores HTTP e rotas de API.
+----
+### cors - comando: npm install cors --save
+#### Middleware que permite que a API seja acessada por outros domínios (necessário para evitar bloqueios de segurança do navegador).
+----
+### body-parser - comando: npm install body-parser --save
+##### Middleware que interpreta o corpo (body) das requisições HTTP, como JSON e dados de formulários.
+----
+### prisma - comando: npm install prisma --
+#### Ferramenta para gerenciamento de esquemas e migrações do banco de dados.
+----
+### prisma/client - comando: npm install @prisma/client --save
+#### Biblioteca que permite interagir com o banco de dados através do código (realiza consultas, inserções etc.).
+----
+### comando: npx prisma migrate dev
+#### Cria e aplica uma migração com base nas alterações feitas no schema.prisma, atualizando o banco de dados automaticamente.
+----
+### comando: npx prisma init 
+#### Cria a estrutura inicial do Prisma, com a pasta prisma e o arquivo schema.prisma para definir o modelo do banco.
 
 ## 📌 Endpoints
 

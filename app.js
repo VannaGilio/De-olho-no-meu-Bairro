@@ -1,12 +1,10 @@
-///express           npm install express--save
-///cors              npm install cors--save
-//body-parser        npm install body - parser--save
+///express           npm install express --save
+///cors              npm install cors --save
+//body-parser        npm install body-parser--save
 //prisma             npm install prisma --save 
 //prisma/client      npm install @prisma/client --save
 //npx prisma migrate dev -> sincronismo
 //npx prisma init -> start prisma
-
-
 
 
 const express = require('express')
