@@ -19,7 +19,7 @@ const bodyParserJSON = bodyParser.json()
 const app = express()
 
 app.use(cors({
-    origin: 'http://127.0.0.1:5500',
+    origin: 'http://127.0.0.1:5501',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }))
 
@@ -87,7 +87,7 @@ app.post('/v1/controle-usuario/usuario/email', cors(), async function (request, 
     response.json(result)
 })
 
-app.listen('3030', '0.0.0.0', function () {
+app.listen(8080, function () {
     console.log('API funcionando...')
 })
 

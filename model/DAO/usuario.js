@@ -19,6 +19,7 @@ const insertUsuario = async function (usuario) {
         else
             return false
     } catch (error) {
+        console.error(error)
         return false
     }
 }
