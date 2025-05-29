@@ -32,17 +32,16 @@ const atualizarHistoricoStatus = async function (id, contentType, status) {
         if (String(contentType) == 'application/json') {
             if (id == "" || id == null || id == undefined || id.length <= 0 || isNaN(id) ||
                 status.data_alteracao == "" || status.data_alteracao == null || status.data_alteracao == undefined ||
-                status.id_ocorrencia == "" || status.id_ocorrencia == null || status.id_ocorrencia == undefined || status.id_ocorrencia.length <=0 ||
+                status.id_ocorrencia == "" || status.id_ocorrencia == null || status.id_ocorrencia == undefined || status.id_ocorrencia.length <= 0 ||
                 status.id_status == "" || status.id_status == null || status.id_status == undefined || status.id_status.length <= 0) {
 
                 return message.ERROR_REQUIRED_FIELDS
             } else {
-
                 let resultStatus = await historicoStatusDAO.selectByIdtHistoricoStatus(parseInt(id))
 
                 if (resultStatus != false || typeof (resultStatus) == 'object') {
                     if (resultStatus.length > 0) {
-                        status.id_status = parseInt(id)
+                        status.id = parseInt(id)
 
                         let result = await historicoStatusDAO.updatetHistoricoStatus(status)
                         if (result) {
@@ -61,6 +60,7 @@ const atualizarHistoricoStatus = async function (id, contentType, status) {
             return message.ERROR_CONTENT_TYPE
         }
     } catch (error) {
+        console.error(error)
         return message.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
@@ -105,9 +105,9 @@ const listarHistoricoStatus = async function () {
                 dadosStatus.status = true
                 dadosStatus.status_code = 200
                 dadosStatus.itens = result.length
-                dadosStatus.status = result
+                dadosStatus.historico = result
 
-                for (const itemHistorico of resultHistorico) {
+                for (const itemHistorico of result) {
                     let dadosOcorrencia = await controllerOcorrencia.buscarOcorrencia(itemHistorico.id_ocorrencia)
                     itemHistorico.ocorrencia = dadosOcorrencia.id_ocorrencia
 
@@ -141,9 +141,9 @@ const buscarHistoricoStatus = async function (id) {
                     dadosStatus.status = true
                     dadosStatus.status_code = 200
                     dadosStatus.itens = result.length
-                    dadosStatus.status = result
+                    dadosStatus.historico = result
 
-                    for (const itemHistorico of resultHistorico) {
+                    for (const itemHistorico of result) {
                         let dadosOcorrencia = await controllerOcorrencia.buscarOcorrencia(itemHistorico.id_ocorrencia)
                         itemHistorico.ocorrencia = dadosOcorrencia.id_ocorrencia
 

@@ -21,7 +21,6 @@ const insertCategoria = async function (categoria) {
         else
             return false
     } catch (error) {
-        console.error(error)
         return false
     }
 }
@@ -30,7 +29,7 @@ const updateCategoria = async function (categoria) {
     try {
         let sql = `update tbl_categorias set nome_categoria = '${categoria.nome_categoria}'
 
-                                             where id_categoria = '${categoria.id_categoria}';`
+                                             where id_categoria = '${categoria.id}';`
 
          let result = await prisma.$executeRawUnsafe(sql)
          if(result)

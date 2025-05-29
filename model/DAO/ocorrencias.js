@@ -42,7 +42,7 @@ const updateOcorrencia = async function (ocorrencia) {
                                                         id_categoria = '${ocorrencia.id_categoria}',
                                                         id_status = '${ocorrencia.id_status}'
 
-                                            where id_ocorrencia = '${ocorrencia.id_ocorrencia}';`
+                                            where id_ocorrencia = '${ocorrencia.id}';`
 
          let result = await prisma.$executeRawUnsafe(sql)
          if(result)

@@ -19,7 +19,6 @@ const insertHistoricoStatus = async function (status) {
         else
             return false
     } catch (error) {
-        console.error(error)
         return false
     }
 }
@@ -30,8 +29,8 @@ const updatetHistoricoStatus = async function (status) {
                                                     id_ocorrencia = '${status.id_ocorrencia}',
                                                     id_status = '${status.id_status}'
 
-                                                    where id_historico = '${status.id_historico}';`
-
+                                                    where id_historico = '${status.id}'`
+                                                    
          let result = await prisma.$executeRawUnsafe(sql)
          if(result)
             return true

@@ -5,13 +5,14 @@ const controllerUsuario = require('../controller/controllerUsuario.js')
 const inserirOcorrencia = async function (ocorrencia, contentType) {
     try {
         if (String(contentType).toLowerCase() == 'application/json') {
+            console.log(ocorrencia)
             if (ocorrencia.titulo == "" || ocorrencia.titulo == null || ocorrencia.titulo == undefined || ocorrencia.titulo.length > 100 ||
-                ocorrencia.descriacao == "" || ocorrencia.descriacao == null || ocorrencia.descriacao == undefined || ocorrencia.descriacao.length > 500 ||
+                ocorrencia.descricao == "" || ocorrencia.descricao == null || ocorrencia.descricao == undefined || ocorrencia.descricao.length > 500 ||
                 ocorrencia.data_criacao == "" || ocorrencia.data_criacao == null || ocorrencia.data_criacao == undefined || 
-                ocorrencia.id_usuario == "" || ocorrencia.id_usuario == null || ocorrencia.id_usuario == undefined || ocorrencia.id_usuario.length <=0 ||
-                ocorrencia.id_endereco == "" || ocorrencia.id_endereco == null || ocorrencia.id_endereco == undefined || ocorrencia.id_endereco.length <=0 ||
-                ocorrencia.id_categoria == "" || ocorrencia.id_categoria == null || ocorrencia.id_categoria == undefined || ocorrencia.id_categoria.length <=0 ||
-                ocorrencia.id_status == "" || ocorrencia.id_status == null || ocorrencia.id_status == undefined || ocorrencia.id_status.length <=0 
+                ocorrencia.id_usuario == "" || ocorrencia.id_usuario == null || ocorrencia.id_usuario == undefined || ocorrencia.id_usuario <=0 ||
+                ocorrencia.id_endereco == "" || ocorrencia.id_endereco == null || ocorrencia.id_endereco == undefined || ocorrencia.id_endereco <=0 ||
+                ocorrencia.id_categoria == "" || ocorrencia.id_categoria == null || ocorrencia.id_categoria == undefined || ocorrencia.id_categoria <=0 ||
+                ocorrencia.id_status == "" || ocorrencia.id_status == null || ocorrencia.id_status == undefined || ocorrencia.id_status <=0 
             ) {
                 return message.ERROR_REQUIRED_FIELDS
             } else {
@@ -51,7 +52,8 @@ const atualizarOcorrencia = async function (id, contentType, ocorrencia) {
 
                 if (resultOcorrencia != false || typeof (resultOcorrencia) == 'object') {
                     if (resultOcorrencia.length > 0) {
-                        ocorrencia.id_ocorrencia = parseInt(id)
+                        console.log(ocorrencia)
+                        ocorrencia.id = parseInt(id)
 
                         let result = await ocorrenciaDAO.updateOcorrencia(ocorrencia)
                         if (result) {
@@ -115,8 +117,9 @@ const listarOcorrencia = async function () {
                 dadosOcorrencia.status_code = 200
                 dadosOcorrencia.itens = result.length
                 dadosOcorrencia.users = result
+                console.log(dadosOcorrencia)
 
-                for (const itemOcorrencia of resultOcorrencia) {
+                for (const itemOcorrencia of result) {
                     let dadosUsuario = await controllerUsuario.buscarUsuario(itemOcorrencia.id_usuario)
                     itemOcorrencia.usuario = dadosUsuario.usuario
                 }

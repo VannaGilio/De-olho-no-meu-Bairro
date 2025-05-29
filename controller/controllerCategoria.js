@@ -27,7 +27,7 @@ const atualizarCategoria = async function (id, contentType, status) {
     try {
         if (String(contentType) == 'application/json') {
             if (id == "" || id == null || id == undefined || id.length <= 0 || isNaN(id) ||
-                status.nome_status == "" || status.nome_status == null || status.nome_status == undefined || status.nome_status.length > 50) {
+                status.nome_categoria == "" || status.nome_categoria == null || status.nome_categoria == undefined || status.nome_categoria.length > 100) {
                 return message.ERROR_REQUIRED_FIELDS
             } else {
 
@@ -35,7 +35,7 @@ const atualizarCategoria = async function (id, contentType, status) {
 
                 if (resultCategoria != false || typeof (resultCategoria) == 'object') {
                     if (resultCategoria.length > 0) {
-                        status.id_status = parseInt(id)
+                        status.id = parseInt(id)
 
                         let result = await categoriaDAO.updateCategoria(status)
                         if (result) {

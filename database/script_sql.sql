@@ -15,7 +15,7 @@ create table tbl_categorias(
 );
 
 CREATE TABLE tbl_status (
-    id_status INT NOT NULL KEY PRIMARY KEY auto_increment,
+    id_status INT NOT NULL PRIMARY KEY auto_increment,
     nome_status VARCHAR(50) not null
 );
 
