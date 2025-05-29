@@ -98,7 +98,7 @@ const listarStatus = async function () {
                 dadosStatus.status = true
                 dadosStatus.status_code = 200
                 dadosStatus.itens = result.length
-                dadosStatus.status = result
+                dadosStatus.stats = result
 
                 return dadosStatus
             } else {

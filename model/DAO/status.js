@@ -7,7 +7,7 @@ const insertStatus = async function (status) {
                                                 nome_status
                                             )values(
                                                 '${status.nome_status}'
-                                            );`
+                                            )`
 
         let result = await prisma.$executeRawUnsafe(sql)
         if (result)

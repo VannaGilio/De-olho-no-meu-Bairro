@@ -19,13 +19,17 @@ const insertEndereco = async function (endereco) {
                                                 bairro,
                                                 cidade,
                                                 estado,
-                                                cep
+                                                cep,
+                                                longitude,
+                                                latitude
                                             )values(
                                                 '${endereco.logradouro}',
                                                 '${endereco.bairro}',
                                                 '${endereco.cidade}',
                                                 '${endereco.estado}',
-                                                '${endereco.cep}'
+                                                '${endereco.cep}',
+                                                '${endereco.longitude}',
+                                                '${endereco.latitude}'
                                             );`
 
         let result = await prisma.$executeRawUnsafe(sql)
@@ -45,7 +49,9 @@ const updateEndereco = async function (endereco) {
                                               bairro     = '${endereco.bairro}',
                                               cidade     = '${endereco.cidade}',
                                               estado     = '${endereco.estado}',
-                                              cep        = '${endereco.cep}'
+                                              cep        = '${endereco.cep}',
+                                              longitude  = '${endereco.longitude}',
+                                              latitude   = '${endereco.latitude}'
 
                                               where id_endereco = '${endereco.id_endereco}';`
 

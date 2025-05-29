@@ -8,7 +8,9 @@ const inserirEndereco = async function (endereco, contentType) {
                 endereco.bairro     == "" || endereco.bairro     == null || endereco.bairro     == undefined || endereco.bairro.length     > 100 ||
                 endereco.cidade     == "" || endereco.cidade     == null || endereco.cidade     == undefined || endereco.cidade.length     > 100 ||
                 endereco.estado     == "" || endereco.estado     == null || endereco.estado     == undefined || endereco.estado.length     > 100 ||
-                endereco.cep        == "" || endereco.cep        == null || endereco.cep        == undefined || endereco.cep.length        > 25
+                endereco.cep        == "" || endereco.cep        == null || endereco.cep        == undefined || endereco.cep.length        > 25  ||
+                endereco.longitude  == "" || endereco.longitude  == null || endereco.longitude  == undefined || 
+                endereco.latitude   == "" || endereco.latitude   == null || endereco.latitude    == undefined
             ) {
                 return message.ERROR_REQUIRED_FIELDS
             } else {
@@ -35,7 +37,9 @@ const atualizarEndereco = async function (id, contentType, endereco) {
                 endereco.bairro     == "" || endereco.bairro     == null || endereco.bairro     == undefined || endereco.bairro.length     > 200 ||
                 endereco.cidade     == "" || endereco.cidade     == null || endereco.cidade     == undefined || endereco.cidade.length     > 200 ||
                 endereco.estado     == "" || endereco.estado     == null || endereco.estado     == undefined || endereco.estado.length     > 200 ||
-                endereco.cep        == "" || endereco.cep        == null || endereco.cep        == undefined || endereco.cep.length        > 50
+                endereco.cep        == "" || endereco.cep        == null || endereco.cep        == undefined || endereco.cep.length        > 50  ||
+                endereco.longitude  == "" || endereco.longitude  == null || endereco.longitude  == undefined || 
+                endereco.latitude   == "" || endereco.latitude   == null || endereco.latitude    == undefined
             ) {
                 return message.ERROR_REQUIRED_FIELDS
             } else {

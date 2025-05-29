@@ -1,17 +1,15 @@
 const message = require('../modulo/config.js')
-const historicoStatusDAO = require('../model/DAO/historico_status')
+const categoriaDAO = require('../model/DAO/categoria.js')
 
-const inserirHistoricoStatus = async function (status, contentType) {
+const inserirCategoria = async function (status, contentType) {
     try {
         if (String(contentType).toLowerCase() == 'application/json') {
-            if (status.data_alteracao == "" || status.data_alteracao == null || status.data_alteracao == undefined ||
-                status.id_ocorrencia == "" || status.id_ocorrencia == null || status.id_ocorrencia == undefined || status.id_ocorrencia.length <=0 ||
-                status.id_status == "" || status.id_status == null || status.id_status == undefined || status.id_status.length <= 0) {
+            if (status.nome_categoria == "" || status.nome_categoria == null || status.nome_categoria == undefined || status.nome_categoria.length > 50 ) {
                 return message.ERROR_REQUIRED_FIELDS
             } else {
-                let resultStatus = await historicoStatusDAO.insertHistoricoStatus(status)
+                let resultCategoria = await categoriaDAO.insertCategoria(status)
 
-                if (resultStatus) {
+                if (resultCategoria) {
                     return message.SUCCESS_CREATED_ITEM
                 } else {
                     return message.ERROR_INTERNAL_SERVER_MODEL
@@ -25,24 +23,21 @@ const inserirHistoricoStatus = async function (status, contentType) {
     }
 }
 
-const atualizarHistoricoStatus = async function (id, contentType, status) {
+const atualizarCategoria = async function (id, contentType, status) {
     try {
         if (String(contentType) == 'application/json') {
             if (id == "" || id == null || id == undefined || id.length <= 0 || isNaN(id) ||
-                status.data_alteracao == "" || status.data_alteracao == null || status.data_alteracao == undefined ||
-                status.id_ocorrencia == "" || status.id_ocorrencia == null || status.id_ocorrencia == undefined || status.id_ocorrencia.length <=0 ||
-                status.id_status == "" || status.id_status == null || status.id_status == undefined || status.id_status.length <= 0) {
-
+                status.nome_status == "" || status.nome_status == null || status.nome_status == undefined || status.nome_status.length > 50) {
                 return message.ERROR_REQUIRED_FIELDS
             } else {
 
-                let resultStatus = await historicoStatusDAO.selectByIdtHistoricoStatus(parseInt(id))
+                let resultCategoria = await categoriaDAO.selectByIdCategoria(parseInt(id))
 
-                if (resultStatus != false || typeof (resultStatus) == 'object') {
-                    if (resultStatus.length > 0) {
+                if (resultCategoria != false || typeof (resultCategoria) == 'object') {
+                    if (resultCategoria.length > 0) {
                         status.id_status = parseInt(id)
 
-                        let result = await historicoStatusDAO.updatetHistoricoStatus(status)
+                        let result = await categoriaDAO.updateCategoria(status)
                         if (result) {
                             return message.SUCCESS_UPDATED_ITEM
                         } else {
@@ -64,16 +59,16 @@ const atualizarHistoricoStatus = async function (id, contentType, status) {
 }
 
 
-const excluirHistoricoStatus = async function (id) {
+const excluirCategoria = async function (id) {
     try {
         if (id == "" || id == null || id == undefined || id.length <= 0 || isNaN(id)) {
             return message.ERROR_REQUIRED_FIELDS
         } else {
-            let resultStatus = await historicoStatusDAO.selectByIdtHistoricoStatus(parseInt(id))
+            let resultCategoria = await categoriaDAO.selectByIdCategoria(parseInt(id))
 
-            if (resultStatus != false || typeof (resultStatus) == 'object') {
-                if (resultStatus.length > 0) {
-                    let result = await historicoStatusDAO.deletetHistoricoStatus(parseInt(id))
+            if (resultCategoria != false || typeof (resultCategoria) == 'object') {
+                if (resultCategoria.length > 0) {
+                    let result = await categoriaDAO.deleteCategoria(parseInt(id))
 
                     if (result) {
                         return message.SUCCESS_DELETED_ITEM
@@ -92,11 +87,11 @@ const excluirHistoricoStatus = async function (id) {
     }
 }
 
-const listarHistoricoStatus = async function () {
+const listarCategoria = async function () {
     try {
         let dadosStatus = {}
 
-        let result = await historicoStatusDAO.selectAlltHistoricoStatus()
+        let result = await categoriaDAO.selectAllCategorias()
 
         if (result != false || typeof (result) == 'object') {
             if (result.length > 0) {
@@ -117,13 +112,13 @@ const listarHistoricoStatus = async function () {
     }
 }
 
-const buscarHistoricoStatus = async function (id) {
+const buscarCategoria = async function (id) {
     try {
         if (id == "" || id == null || id == undefined || id.length <= 0 || isNaN(id)) {
             return message.ERROR_REQUIRED_FIELDS
         } else {
             let dadosStatus = {}
-            let result = await historicoStatusDAO.selectByIdtHistoricoStatus(id)
+            let result = await categoriaDAO.selectByIdCategoria(id)
 
             if (result != false || typeof (result) == 'object') {
                 if (result.length > 0) {
@@ -148,9 +143,9 @@ const buscarHistoricoStatus = async function (id) {
 
 
 module.exports = {
-    inserirHistoricoStatus,
-    atualizarHistoricoStatus,
-    excluirHistoricoStatus,
-    listarHistoricoStatus,
-    buscarHistoricoStatus
+    inserirCategoria,
+    atualizarCategoria,
+    excluirCategoria,
+    listarCategoria,
+    buscarCategoria
 }
