@@ -72,3 +72,31 @@ CREATE TABLE tbl_historico_status (
     REFERENCES tbl_status(id_status)
 );
 
+
+CREATE TABLE tbl_tipos_midias (
+    id_tipo_midia INT NOT NULL PRIMARY KEY auto_increment,
+    nome_tipo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE tbl_midias (
+    id_midia INT NOT NULL PRIMARY KEY auto_increment,
+    nome_arquivo VARCHAR(250) NOT NULL,
+    url TEXT NOT NULL,
+    tamanho BIGINT NOT NULL,
+    id_ocorrencia INT NOT NULL,
+    id_usuario INT NOT NULL,
+    id_tipo_midia INT NOT NULL,
+
+    CONSTRAINT FK_TIPO_MIDIAS_MIDIAS
+    FOREIGN KEY (id_tipo_midia)
+    REFERENCES tbl_tipos_midias(id_tipo_midia)
+
+    CONSTRAINT FK_OCORRENCIAS_MIDIAS
+    FOREIGN KEY (id_ocorrencia)
+    REFERENCES tbl_ocorrencias(id_ocorrencia)
+
+    CONSTRAINT FK_USUARIO_MIDIAS
+    FOREIGN KEY (id_usuario)
+    REFERENCES tbl_usuario(id_usuario)
+);
+
