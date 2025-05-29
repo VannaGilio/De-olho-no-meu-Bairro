@@ -1,5 +1,7 @@
 const message = require('../modulo/config.js')
 const historicoStatusDAO = require('../model/DAO/historico_status')
+const controllerOcorrencia = require('../controller/controllerOcorrencia.js')
+const controllerStatus = require('../controller/controllerStatus.js')
 
 const inserirHistoricoStatus = async function (status, contentType) {
     try {
@@ -105,6 +107,14 @@ const listarHistoricoStatus = async function () {
                 dadosStatus.itens = result.length
                 dadosStatus.status = result
 
+                for (const itemHistorico of resultHistorico) {
+                    let dadosOcorrencia = await controllerOcorrencia.buscarOcorrencia(itemHistorico.id_ocorrencia)
+                    itemHistorico.ocorrencia = dadosOcorrencia.id_ocorrencia
+
+                    let dadosStatus = await controllerStatus.buscarStatus(itemHistorico.id_status)
+                    itemHistorico.status = dadosStatus.id_status
+                }
+
                 return dadosStatus
             } else {
                 return message.ERROR_NOT_FOUND
@@ -132,6 +142,14 @@ const buscarHistoricoStatus = async function (id) {
                     dadosStatus.status_code = 200
                     dadosStatus.itens = result.length
                     dadosStatus.status = result
+
+                    for (const itemHistorico of resultHistorico) {
+                        let dadosOcorrencia = await controllerOcorrencia.buscarOcorrencia(itemHistorico.id_ocorrencia)
+                        itemHistorico.ocorrencia = dadosOcorrencia.id_ocorrencia
+
+                        let dadosStatus = await controllerStatus.buscarStatus(itemHistorico.id_status)
+                        itemHistorico.status = dadosStatus.id_status
+                    }
 
                     return dadosStatus
                 } else {

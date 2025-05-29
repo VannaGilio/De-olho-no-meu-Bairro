@@ -98,7 +98,7 @@ const listarCategoria = async function () {
                 dadosStatus.status = true
                 dadosStatus.status_code = 200
                 dadosStatus.itens = result.length
-                dadosStatus.status = result
+                dadosStatus.categorias = result
 
                 return dadosStatus
             } else {
@@ -126,7 +126,7 @@ const buscarCategoria = async function (id) {
                     dadosStatus.status = true
                     dadosStatus.status_code = 200
                     dadosStatus.itens = result.length
-                    dadosStatus.status = result
+                    dadosStatus.categoria = result
 
                     return dadosStatus
                 } else {
