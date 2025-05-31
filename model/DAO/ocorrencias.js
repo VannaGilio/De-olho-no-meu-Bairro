@@ -27,7 +27,6 @@ const insertOcorrencia = async function (ocorrencia) {
         else
             return false
     } catch (error) {
-        console.error(error)
         return false
     }
 }

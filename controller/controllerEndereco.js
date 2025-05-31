@@ -14,12 +14,34 @@ const inserirEndereco = async function (endereco, contentType) {
             ) {
                 return message.ERROR_REQUIRED_FIELDS
             } else {
-                let resultEndereco = await enderecoDAO.insertEndereco(endereco)
+                let verificacaoEndereco = await enderecoDAO.verificarEnderecoExistente(endereco)
 
-                if (resultEndereco) {
-                    return message.SUCCESS_CREATED_ITEM
-                } else {
-                    return message.ERROR_INTERNAL_SERVER_MODEL
+                if (verificacaoEndereco.length > 0){
+                    let dados = {}
+                    
+                    dados.status = true
+                    dados.status_code = 200
+                    dados.message = "ja existe esse endereço"
+                    dados.result = verificacaoEndereco
+                    
+                    return dados
+                }else {
+                    let resultEndereco = await enderecoDAO.insertEndereco(endereco)
+
+                    if (resultEndereco) {
+
+                        let lastEndereco = await enderecoDAO.selectLastEndereco()
+
+                        let dados = {}
+                        
+                        dados.status = true
+                        dados.status_code = 200
+                        dados.result = lastEndereco
+
+                        return dados
+                    } else {
+                        return message.ERROR_INTERNAL_SERVER_MODEL
+                    }
                 }
             }
         } else {
@@ -105,7 +127,7 @@ const listarEndereco = async function () {
         let dadosEndereco = {}
 
         let result = await enderecoDAO.selectAllEnderecos()
-
+        
         if (result != false || typeof (result) == 'object') {
             if (result.length > 0) {
                 dadosEndereco.status = true

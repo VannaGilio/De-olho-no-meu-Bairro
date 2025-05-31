@@ -28,7 +28,6 @@ const controllerUsuario = require('./controller/controllerUsuario.js')
 const controllerEndereco = require('./controller/controllerEndereco.js')
 const controllerCategoria = require('./controller/controllerCategoria.js')
 const controllerStatus = require('./controller/controllerStatus.js')
-const controllerHistoricoStatus = require('./controller/controllerHistoricoStatus.js')
 const controllerOcorrencias = require('./controller/controllerOcorrencia.js')
 
 //---------------------------------------------USUARIO-------------------------------------------------------
@@ -230,53 +229,6 @@ app.put('/v1/controle-usuario/status/:id', cors(), bodyParserJSON, async functio
     let dadosBody = request.body
 
     let result = await controllerStatus.atualizarStatus(idStatus, contentType, dadosBody)
-
-    response.status(result.status_code)
-    response.json(result)
-})
-
-//---------------------------------------------HISTORICO STATUS-------------------------------------------------------
-
-app.post('/v1/controle-usuario/historico-status', cors(), bodyParserJSON, async function (request, response) {
-
-    let contentType = request.headers['content-type']
-    let dadosBody = request.body
-
-    let result = await controllerHistoricoStatus.inserirHistoricoStatus(dadosBody, contentType)
-
-    response.status(result.status_code)
-    response.json(result)
-})
-app.get('/v1/controle-usuario/historico-status', cors(), async function (request, response) {
-
-    let result = await controllerHistoricoStatus.listarHistoricoStatus()
-
-    response.status(result.status_code)
-    response.json(result)
-})
-app.get('/v1/controle-usuario/historico-status/:id', cors(), async function (request, response) {
-
-    let idHistoricoStatus = request.params.id
-    let result = await controllerHistoricoStatus.buscarHistoricoStatus(idHistoricoStatus)
-
-    response.status(result.status_code)
-    response.json(result)
-})
-app.delete('/v1/controle-usuario/historico-status/:id', cors(), async function (request, response) {
-    let idHistoricoStatus = request.params.id
-    let result = await controllerHistoricoStatus.excluirHistoricoStatus(idHistoricoStatus)
-
-    response.status(result.status_code)
-    response.json(result)
-})
-app.put('/v1/controle-usuario/historico-status/:id', cors(), bodyParserJSON, async function (request, response) {
-    let contentType = request.headers['content-type']
-
-    let idHistoricoStatus = request.params.id
-
-    let dadosBody = request.body
-
-    let result = await controllerHistoricoStatus.atualizarHistoricoStatus(idHistoricoStatus, contentType, dadosBody)
 
     response.status(result.status_code)
     response.json(result)

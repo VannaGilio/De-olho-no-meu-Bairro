@@ -8,14 +8,12 @@ const insertStatus = async function (status) {
                                                 url,
                                                 tamanho,
                                                 id_ocorrencia,
-                                                id_tipo_midia,
                                                 id_usuario
                                             )values(
                                                 '${status.nome_arquivo}',
                                                 '${status.url}',
                                                 '${status.tamanho}',
                                                 '${status.id_ocorrencia}',
-                                                '${status.id_tipo_midia}',
                                                 '${status.nome_usuario}'
                                             )`
 

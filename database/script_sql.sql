@@ -85,11 +85,6 @@ CREATE TABLE tbl_midias (
     tamanho BIGINT NOT NULL,
     id_ocorrencia INT NOT NULL,
     id_usuario INT NOT NULL,
-    id_tipo_midia INT NOT NULL,
-
-    CONSTRAINT FK_TIPO_MIDIAS_MIDIAS
-    FOREIGN KEY (id_tipo_midia)
-    REFERENCES tbl_tipos_midias(id_tipo_midia)
 
     CONSTRAINT FK_OCORRENCIAS_MIDIAS
     FOREIGN KEY (id_ocorrencia)

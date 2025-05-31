@@ -28,8 +28,8 @@ const insertEndereco = async function (endereco) {
                                                 '${endereco.cidade}',
                                                 '${endereco.estado}',
                                                 '${endereco.cep}',
-                                                '${endereco.longitude}',
-                                                '${endereco.latitude}'
+                                                ${endereco.longitude},
+                                                ${endereco.latitude}
                                             );`
 
         let result = await prisma.$executeRawUnsafe(sql)
@@ -50,8 +50,8 @@ const updateEndereco = async function (endereco) {
                                               cidade     = '${endereco.cidade}',
                                               estado     = '${endereco.estado}',
                                               cep        = '${endereco.cep}',
-                                              longitude  = '${endereco.longitude}',
-                                              latitude   = '${endereco.latitude}'
+                                              longitude  = ${endereco.longitude},
+                                              latitude   = ${endereco.latitude}
 
                                               where id_endereco = '${endereco.id_endereco}';`
 
@@ -107,10 +107,48 @@ const selectByIdEndereco = async function (id){
     }
 }
 
+const selectLastEndereco = async function (){
+    try {
+        let sql = `select * from tbl_enderecos order by id_endereco desc limit 1`
+
+        let result = await prisma.$queryRawUnsafe(sql)
+        if(result)
+            return result
+        else
+            return false
+    } catch (error) {
+        return false
+    }
+}
+
+const verificarEnderecoExistente = async function (endereco){
+    try {
+        const sql = `
+            SELECT * FROM tbl_enderecos
+            WHERE 
+                logradouro = '${endereco.logradouro}' AND
+                bairro     = '${endereco.bairro}'     AND
+                cidade     = '${endereco.cidade}'     AND
+                estado     = '${endereco.estado}'     AND
+                cep        = '${endereco.cep}'
+            LIMIT 1;
+        `
+        let result = await prisma.$queryRawUnsafe(sql)
+        if(result)
+            return result
+        else
+            return false
+    } catch (error) {
+        return false
+    }
+}
+
 module.exports = {
     insertEndereco,
     updateEndereco,
     deleteEndereco,
     selectAllEnderecos,
-    selectByIdEndereco
+    selectByIdEndereco,
+    selectLastEndereco,
+    verificarEnderecoExistente
 }

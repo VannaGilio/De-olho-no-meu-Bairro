@@ -1,7 +1,7 @@
 # 📢 API Reporter do Meu Bairro
 
 - **Versão:** v1  
-- **Base URL:** `http://localhost:3030/v1/controle-usuario/usuario`  
+- **Base URL:** `http://localhost:8080/v1/controle-usuario/...`  
 - **Formato:** JSON  
 - **Autenticação:** Nenhuma (inicialmente)
 

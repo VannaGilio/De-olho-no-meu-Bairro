@@ -1,11 +1,14 @@
 const message = require('../modulo/config.js')
 const ocorrenciaDAO = require('../model/DAO//ocorrencias.js')
-const controllerUsuario = require('../controller/controllerUsuario.js')
+
+const controllerUsuario    = require('../controller/controllerUsuario.js')
+const controllerStatus     = require('../controller/controllerStatus.js')
+const controllerCategoria  = require('../controller/controllerCategoria.js')
+const controllerEndereco   = require('../controller/controllerEndereco.js')
 
 const inserirOcorrencia = async function (ocorrencia, contentType) {
     try {
         if (String(contentType).toLowerCase() == 'application/json') {
-            console.log(ocorrencia)
             if (ocorrencia.titulo == "" || ocorrencia.titulo == null || ocorrencia.titulo == undefined || ocorrencia.titulo.length > 100 ||
                 ocorrencia.descricao == "" || ocorrencia.descricao == null || ocorrencia.descricao == undefined || ocorrencia.descricao.length > 500 ||
                 ocorrencia.data_criacao == "" || ocorrencia.data_criacao == null || ocorrencia.data_criacao == undefined || 
@@ -52,7 +55,7 @@ const atualizarOcorrencia = async function (id, contentType, ocorrencia) {
 
                 if (resultOcorrencia != false || typeof (resultOcorrencia) == 'object') {
                     if (resultOcorrencia.length > 0) {
-                        console.log(ocorrencia)
+
                         ocorrencia.id = parseInt(id)
 
                         let result = await ocorrenciaDAO.updateOcorrencia(ocorrencia)
@@ -107,6 +110,7 @@ const excluirOcorrencia = async function (id) {
 
 const listarOcorrencia = async function () {
     try {
+        let arrayOcorrencia = []
         let dadosOcorrencia = {}
 
         let result = await ocorrenciaDAO.selectAllOcorrencia()
@@ -116,13 +120,28 @@ const listarOcorrencia = async function () {
                 dadosOcorrencia.status = true
                 dadosOcorrencia.status_code = 200
                 dadosOcorrencia.itens = result.length
-                dadosOcorrencia.users = result
-                console.log(dadosOcorrencia)
 
                 for (const itemOcorrencia of result) {
                     let dadosUsuario = await controllerUsuario.buscarUsuario(itemOcorrencia.id_usuario)
-                    itemOcorrencia.usuario = dadosUsuario.usuario
+                    itemOcorrencia.usuario = dadosUsuario.users
+                    delete itemOcorrencia.id_usuario
+
+                    let dadosStatus = await controllerStatus.buscarStatus(itemOcorrencia.id_status)
+                    itemOcorrencia.stat = dadosStatus.stats
+                    delete itemOcorrencia.id_status
+
+                    let dadosCategoria = await controllerCategoria.buscarCategoria(itemOcorrencia.id_categoria)
+                    itemOcorrencia.categoria = dadosCategoria.categoria
+                    delete itemOcorrencia.id_categoria
+
+                    let dadosEndereco = await controllerEndereco.buscarEndereco(itemOcorrencia.id_endereco)
+                    itemOcorrencia.endereco = dadosEndereco.enderecos
+                    delete itemOcorrencia.id_endereco
+
+                    arrayOcorrencia.push(itemOcorrencia)
                 }
+
+                dadosOcorrencia.ocorrencias = arrayOcorrencia
                 return dadosOcorrencia
             } else {
                 return message.ERROR_NOT_FOUND
@@ -140,6 +159,7 @@ const buscarOcorrencia = async function (id) {
         if (id == "" || id == null || id == undefined || id.length <= 0 || isNaN(id)) {
             return message.ERROR_REQUIRED_FIELDS
         } else {
+            let arrayOcorrencia = []
             let dadosOcorrencia = {}
             let result = await ocorrenciaDAO.selectByIdOcorrencia(id)
 
@@ -149,8 +169,28 @@ const buscarOcorrencia = async function (id) {
                     dadosOcorrencia.status = true
                     dadosOcorrencia.status_code = 200
                     dadosOcorrencia.itens = result.length
-                    dadosOcorrencia.users = result
 
+                    for (const itemOcorrencia of result) {
+                        let dadosUsuario = await controllerUsuario.buscarUsuario(itemOcorrencia.id_usuario)
+                        itemOcorrencia.usuario = dadosUsuario.users
+                        delete itemOcorrencia.id_usuario
+
+                        let dadosStatus = await controllerStatus.buscarStatus(itemOcorrencia.id_status)
+                        itemOcorrencia.stat = dadosStatus.stats
+                        delete itemOcorrencia.id_status
+
+                        let dadosCategoria = await controllerCategoria.buscarCategoria(itemOcorrencia.id_categoria)
+                        itemOcorrencia.categoria = dadosCategoria.categoria
+                        delete itemOcorrencia.id_categoria
+
+                        let dadosEndereco = await controllerEndereco.buscarEndereco(itemOcorrencia.id_endereco)
+                        itemOcorrencia.endereco = dadosEndereco.enderecos
+                        delete itemOcorrencia.id_endereco
+
+                        arrayOcorrencia.push(itemOcorrencia)
+                    }
+
+                    dadosOcorrencia.ocorrencias = arrayOcorrencia
                     return dadosOcorrencia
                 } else {
                     return message.ERROR_NOT_FOUND
