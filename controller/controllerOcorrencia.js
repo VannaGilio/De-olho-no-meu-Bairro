@@ -23,7 +23,22 @@ const inserirOcorrencia = async function (ocorrencia, contentType) {
 
                 if (resultOcorrencia) {
 
-                    return message.SUCCESS_CREATED_ITEM
+                    let selectLastId = await ocorrenciaDAO.selectLastOcorrencia()
+
+                    let lastOcorrencia = await ocorrenciaDAO.selectByIdOcorrencia(selectLastId[0].id_ocorrencia)
+
+                    if(lastOcorrencia.length > 0){
+                        let dadosOcorrencia = {
+                            status: true,
+                            status_code: 201,
+                            message: "Item criado com sucesso!!!",
+                            result: lastOcorrencia
+                        }
+
+                        return dadosOcorrencia
+                    }else {
+                        return message.ERROR_NOT_FOUND
+                    }
                 } else {
                     return message.ERROR_INTERNAL_SERVER_MODEL
                 }

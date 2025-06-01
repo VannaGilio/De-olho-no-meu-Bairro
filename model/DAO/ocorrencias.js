@@ -95,11 +95,26 @@ const selectByIdOcorrencia = async function (id){
     }
 }
 
+const selectLastOcorrencia = async function (){
+    try {
+        let sql = `select id_ocorrencia from tbl_ocorrencias order by id_ocorrencia desc limit 1`
+
+        let result = await prisma.$queryRawUnsafe(sql)
+        if(result)
+            return result
+        else
+            return false
+    } catch (error) {
+        return false
+    }
+}
+
 
 module.exports = {
     insertOcorrencia,
     updateOcorrencia,
     deleteOcorrencia,
     selectByIdOcorrencia,
-    selectAllOcorrencia
+    selectAllOcorrencia,
+    selectLastOcorrencia
 }
