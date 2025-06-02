@@ -29,6 +29,7 @@ const controllerEndereco = require('./controller/controllerEndereco.js')
 const controllerCategoria = require('./controller/controllerCategoria.js')
 const controllerStatus = require('./controller/controllerStatus.js')
 const controllerOcorrencias = require('./controller/controllerOcorrencia.js')
+const controllerMidias = require('./controller/controllerMidia.js')
 
 //---------------------------------------------USUARIO-------------------------------------------------------
 
@@ -276,6 +277,53 @@ app.put('/v1/controle-usuario/ocorrencias/:id', cors(), bodyParserJSON, async fu
     let dadosBody = request.body
 
     let result = await controllerOcorrencias.atualizarOcorrencia(idOcorrencia, contentType, dadosBody)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+//---------------------------------------------MIDIAS-------------------------------------------------------
+
+app.post('/v1/controle-usuario/midias', cors(), bodyParserJSON, async function (request, response) {
+
+    let contentType = request.headers['content-type']
+    let dadosBody = request.body
+
+    let result = await controllerMidias.inserirMidia(dadosBody, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.get('/v1/controle-usuario/midias', cors(), async function (request, response) {
+
+    let result = await controllerMidias.listarMidia()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.get('/v1/controle-usuario/midias/:id', cors(), async function (request, response) {
+
+    let idMidia = request.params.id
+    let result = await controllerMidias.buscarMidia(idMidia)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.delete('/v1/controle-usuario/midias/:id', cors(), async function (request, response) {
+    let idMidia = request.params.id
+    let result = await controllerMidias.excluirMidia(idMidia)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.put('/v1/controle-usuario/midias/:id', cors(), bodyParserJSON, async function (request, response) {
+    let contentType = request.headers['content-type']
+
+    let idMidia = request.params.id
+
+    let dadosBody = request.body
+
+    let result = await controllerMidias.atualizarMidia(idMidia, contentType, dadosBody)
 
     response.status(result.status_code)
     response.json(result)

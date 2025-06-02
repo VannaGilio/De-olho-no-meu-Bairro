@@ -5,6 +5,7 @@ const controllerUsuario    = require('../controller/controllerUsuario.js')
 const controllerStatus     = require('../controller/controllerStatus.js')
 const controllerCategoria  = require('../controller/controllerCategoria.js')
 const controllerEndereco   = require('../controller/controllerEndereco.js')
+const controllerMidia      = require('../controller/controllerMidia.js')
 
 const inserirOcorrencia = async function (ocorrencia, contentType) {
     try {
@@ -152,6 +153,9 @@ const listarOcorrencia = async function () {
                     let dadosEndereco = await controllerEndereco.buscarEndereco(itemOcorrencia.id_endereco)
                     itemOcorrencia.endereco = dadosEndereco.enderecos
                     delete itemOcorrencia.id_endereco
+
+                    let dadosMidia = await controllerMidia.buscarMidiaPorOcorrencia(itemOcorrencia.id_ocorrencia)
+                    itemOcorrencia.midia = dadosMidia.midia
 
                     arrayOcorrencia.push(itemOcorrencia)
                 }
