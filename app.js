@@ -4,7 +4,7 @@
 //prisma             npm install prisma --save 
 //prisma/client      npm install @prisma/client --save
 //npx prisma migrate dev -> sincronismo
-//npx prisma init -> start prisma
+//npx prisma initnpx prisma init -> start prisma
 
 
 const express = require('express')
@@ -305,6 +305,14 @@ app.get('/v1/controle-usuario/midias/:id', cors(), async function (request, resp
 
     let idMidia = request.params.id
     let result = await controllerMidias.buscarMidia(idMidia)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.get('/v1/controle-usuario/midias-ocorrencias/:id', cors(), async function (request, response) {
+
+    let idMidia = request.params.id
+    let result = await controllerMidias.buscarMidiaPorOcorrencia(idMidia)
 
     response.status(result.status_code)
     response.json(result)
