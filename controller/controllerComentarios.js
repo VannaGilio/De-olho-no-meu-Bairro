@@ -187,19 +187,19 @@ const buscarComentariosByIdOcorrencia = async function (id) {
             return message.ERROR_REQUIRED_FIELDS
         }else{
             let result = await comentarioDAO.selectComentarioByIdOcorrencia(id)
+
             let dadosComentario = {}
-
-            if (result && Array.isArray(result) && result.length > 0) {
+            if (result && Array.isArray(result)) {
                 if (result.length > 0) {
-
                     dadosComentario.status = true
                     dadosComentario.status_code = 200
                     dadosComentario.itens = result.length
+                    dadosComentario.comments = result
 
                     return dadosComentario
-            }else{
-                return message.ERROR_NOT_FOUND
-            }
+                }else{
+                    return message.ERROR_NOT_FOUND
+                }
             }else{
                 return message.ERROR_INTERNAL_SERVER_MODEL
             }

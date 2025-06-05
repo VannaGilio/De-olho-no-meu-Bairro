@@ -92,6 +92,7 @@ selectComentarioByIdOcorrencia = async function (id){
         let sql = `select * from tbl_comentarios where id_ocorrencia = ${id};`
 
         let result = await prisma.$queryRawUnsafe(sql)
+
         if(result)
             return result
         else
