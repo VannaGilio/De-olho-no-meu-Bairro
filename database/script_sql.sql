@@ -74,3 +74,18 @@ CREATE TABLE tbl_midias (
     REFERENCES tbl_usuario(id_usuario)
 );
 
+CREATE TABLE tbl_comentarios (
+    id_comentario INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    comentario varchar(600) NOT NULL,
+    data_criacao DATE NOT NULL,
+    id_ocorrencia INT NOT NULL,
+    id_usuario INT NOT NULL,
+
+    CONSTRAINT FK_OCORRENCIAS_COMENTARIOS
+    FOREIGN KEY (id_ocorrencia) 
+    REFERENCES tbl_ocorrencias(id_ocorrencia),
+
+    CONSTRAINT FK_USUARIO_COMENTARIOS
+    FOREIGN KEY (id_usuario) 
+    REFERENCES tbl_usuario(id_usuario)
+);

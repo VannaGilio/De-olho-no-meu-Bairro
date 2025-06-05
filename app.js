@@ -1,5 +1,5 @@
 ///express           npm install express --save
-///cors              npm install express --save
+///cors              npm install cors --save
 //body-parser        npm install body-parser --save
 //prisma             npm install prisma --save 
 //prisma/client      npm install @prisma/client --save
@@ -30,6 +30,7 @@ const controllerCategoria = require('./controller/controllerCategoria.js')
 const controllerStatus = require('./controller/controllerStatus.js')
 const controllerOcorrencias = require('./controller/controllerOcorrencia.js')
 const controllerMidias = require('./controller/controllerMidia.js')
+const controllerComentarios = require('./controller/controllerComentarios.js')
 
 //---------------------------------------------USUARIO-------------------------------------------------------
 
@@ -337,6 +338,61 @@ app.put('/v1/controle-usuario/midias/:id', cors(), bodyParserJSON, async functio
     response.json(result)
 })
 
+//---------------------------------------------COMENTARIOS-------------------------------------------------------
+
+app.post('/v1/controle-usuario/comentario-ocorrencias', cors(), bodyParserJSON, async function (request, response) {
+
+    let contentType = request.headers['content-type']
+    let dadosBody = request.body
+
+    let result = await controllerComentarios.inserirComentario(dadosBody, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.get('/v1/controle-usuario/comentario-ocorrencias', cors(), async function (request, response) {
+
+    let result = await controllerComentarios.listarComentario()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.get('/v1/controle-usuario/comentario-ocorrencias/:id', cors(), async function (request, response) {
+
+    let idComentario = request.params.id
+    let result = await controllerComentarios.buscarComentario(idComentario)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.delete('/v1/controle-usuario/comentario-ocorrencias/:id', cors(), async function (request, response) {
+    let idComentario = request.params.id
+    let result = await controllerComentarios.excluirComentario(idComentario)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+app.put('/v1/controle-usuario/comentario-ocorrencias/:id', cors(), bodyParserJSON, async function (request, response) {
+    let contentType = request.headers['content-type']
+
+    let idComentario = request.params.id
+
+    let dadosBody = request.body
+
+    let result = await controllerComentarios.atualizarComentario(idComentario, contentType, dadosBody)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/controle-usuario/comentario-por-ocorrencia/:id', cors(), async function (request, response) {
+
+    let idComentario = request.params.id
+    let result = await controllerComentarios.buscarComentariosByIdOcorrencia(idComentario)
+
+    response.status(result.status_code)
+    response.json(result)
+})
 
 app.listen(8080, function () {
     console.log('API funcionando...')
