@@ -42,7 +42,7 @@ Cadastra um novo usuário no sistema.
 
 ### 🔹 Listar Todos os Usuários
 
-**GET /usuarios**  
+**GET /v1/controle-usuario/usuario**  
 Retorna todos os usuários cadastrados.
 
 #### 📤 Resposta:
@@ -72,7 +72,7 @@ Retorna todos os usuários cadastrados.
 
 ### 🔹 Listar Usuário por ID
 
-**GET /usuarios/:id**  
+**GET /v1/controle-usuario/usuario/:id**  
 Retorna um usuário específico pelo seu ID.
 
 #### 📌 Exemplo:
@@ -99,7 +99,7 @@ Retorna um usuário específico pelo seu ID.
 
 ### 🔹 Atualizar Usuário
 
-**PUT /usuarios/:id**  
+**PUT /v1/controle-usuario/usuario:id**  
 Atualiza os dados de um usuário específico.
 
 #### 📥 Corpo da Requisição:
@@ -124,7 +124,39 @@ Atualiza os dados de um usuário específico.
 
 ### 🔹 Deletar Usuário
 
-**DELETE /usuarios/:id**  
+**DELETE /v1/controle-usuario/usuario:id**  
+Remove um usuário do sistema.
+
+#### 📤 Resposta:
+```json
+{
+  "status": true,
+  "status_code": 200,
+  "message": "Item excluído com sucesso!!!"
+}
+```
+
+---
+
+### 🔹 Login do Usuário
+
+**DELETE /v1/controle-usuario/usuario:id**  
+Remove um usuário do sistema.
+
+#### 📤 Resposta:
+```json
+{
+  "status": true,
+  "status_code": 200,
+  "message": "Item excluído com sucesso!!!"
+}
+```
+
+---
+
+### 🔹 Deletar Usuário
+
+**DELETE /v1/controle-usuario/usuario:id**  
 Remove um usuário do sistema.
 
 #### 📤 Resposta:
