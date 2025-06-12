@@ -189,12 +189,22 @@ const buscarComentariosByIdOcorrencia = async function (id) {
             let result = await comentarioDAO.selectComentarioByIdOcorrencia(id)
 
             let dadosComentario = {}
+            let arrayComentario = []
             if (result && Array.isArray(result)) {
                 if (result.length > 0) {
                     dadosComentario.status = true
                     dadosComentario.status_code = 200
                     dadosComentario.itens = result.length
-                    dadosComentario.comments = result
+
+                    for (const itemComentario of result) {
+                        let dadosUsuario = await controllerUsuario.buscarUsuario(itemComentario.id_usuario)
+                        itemComentario.usuario = dadosUsuario.users
+                        delete itemComentario.id_usuario
+
+                        arrayComentario.push(itemComentario)
+                    }
+
+                    dadosComentario.comments = arrayComentario
 
                     return dadosComentario
                 }else{

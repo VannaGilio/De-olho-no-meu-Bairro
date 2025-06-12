@@ -6,6 +6,7 @@ const controllerStatus     = require('../controller/controllerStatus.js')
 const controllerCategoria  = require('../controller/controllerCategoria.js')
 const controllerEndereco   = require('../controller/controllerEndereco.js')
 const controllerMidia      = require('../controller/controllerMidia.js')
+const controllerComentario = require('../controller/controllerComentarios.js')
 
 const inserirOcorrencia = async function (ocorrencia, contentType) {
     try {
@@ -157,6 +158,9 @@ const listarOcorrencia = async function () {
                     let dadosMidia = await controllerMidia.buscarMidiaPorOcorrencia(itemOcorrencia.id_ocorrencia)
                     itemOcorrencia.midia = dadosMidia.midia
 
+                    let dadosComentario = await controllerComentario.buscarComentariosByIdOcorrencia(itemOcorrencia.id_ocorrencia)
+                    itemOcorrencia.comentarios = dadosComentario.comments
+
                     arrayOcorrencia.push(itemOcorrencia)
                 }
 
@@ -205,6 +209,12 @@ const buscarOcorrencia = async function (id) {
                         let dadosEndereco = await controllerEndereco.buscarEndereco(itemOcorrencia.id_endereco)
                         itemOcorrencia.endereco = dadosEndereco.enderecos
                         delete itemOcorrencia.id_endereco
+
+                        let dadosMidia = await controllerMidia.buscarMidiaPorOcorrencia(itemOcorrencia.id_ocorrencia)
+                        itemOcorrencia.midia = dadosMidia.midia
+    
+                        let dadosComentario = await controllerComentario.buscarComentariosByIdOcorrencia(itemOcorrencia.id_ocorrencia)
+                        itemOcorrencia.comentarios = dadosComentario.comments
 
                         arrayOcorrencia.push(itemOcorrencia)
                     }
