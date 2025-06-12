@@ -1,7 +1,7 @@
 # 📢 API Reporter do Meu Bairro
 
 - **Versão:** v1  
-- **Base URL:** `http://localhost:3030/v1/controle-usuario/usuario`  
+- **Base URL:** `http://localhost:8080/v1/controle-usuario/...`  
 - **Formato:** JSON  
 - **Autenticação:** Nenhuma (inicialmente)
 
@@ -12,6 +12,30 @@
 A API *Reporter do Meu Bairro* permite o cadastro, consulta, atualização e exclusão de usuários no sistema. Essa versão inicial não possui autenticação e utiliza JSON para troca de dados.
 
 ---
+
+## 📎 Observações
+### 🔹 Para criar e utilizar a API precisamos instalar:
+
+### express - comando: npm install express --save
+#### Framework para Node.js que facilita a criação de servidores HTTP e rotas de API.
+----
+### cors - comando: npm install cors --save
+#### Middleware que permite que a API seja acessada por outros domínios (necessário para evitar bloqueios de segurança do navegador).
+----
+### body-parser - comando: npm install body-parser --save
+##### Middleware que interpreta o corpo (body) das requisições HTTP, como JSON e dados de formulários.
+----
+### prisma - comando: npm install prisma --
+#### Ferramenta para gerenciamento de esquemas e migrações do banco de dados.
+----
+### prisma/client - comando: npm install @prisma/client --save
+#### Biblioteca que permite interagir com o banco de dados através do código (realiza consultas, inserções etc.).
+----
+### comando: npx prisma migrate dev
+#### Cria e aplica uma migração com base nas alterações feitas no schema.prisma, atualizando o banco de dados automaticamente.
+----
+### comando: npx prisma init 
+#### Cria a estrutura inicial do Prisma, com a pasta prisma e o arquivo schema.prisma para definir o modelo do banco.
 
 ## 📌 Endpoints
 
@@ -99,8 +123,15 @@ Retorna um usuário específico pelo seu ID.
 
 ### 🔹 Atualizar Usuário
 
+<<<<<<< HEAD
 **PUT /v1/controle-usuario/usuario:id**  
+=======
+**PUT /v1/controle-usuario/usuario/:id**  
+>>>>>>> 7d056d4153c2d61a026075f56fa10246f7d2f946
 Atualiza os dados de um usuário específico.
+
+#### 📌 Exemplo:
+`PUT /usuarios/4`
 
 #### 📥 Corpo da Requisição:
 ```json
@@ -124,6 +155,7 @@ Atualiza os dados de um usuário específico.
 
 ### 🔹 Deletar Usuário
 
+<<<<<<< HEAD
 **DELETE /v1/controle-usuario/usuario:id**  
 Remove um usuário do sistema.
 
@@ -157,7 +189,13 @@ Remove um usuário do sistema.
 ### 🔹 Deletar Usuário
 
 **DELETE /v1/controle-usuario/usuario:id**  
+=======
+**DELETE /v1/controle-usuario/usuario/:id**  
+>>>>>>> 7d056d4153c2d61a026075f56fa10246f7d2f946
 Remove um usuário do sistema.
+
+#### 📌 Exemplo:
+`DELETE /usuarios/4`
 
 #### 📤 Resposta:
 ```json
@@ -165,18 +203,6 @@ Remove um usuário do sistema.
   "status": true,
   "status_code": 200,
   "message": "Item excluído com sucesso!!!"
-}
-```
-
----
-
-## ⚠️ Erros Comuns (exemplo)
-
-```json
-{
-  "status": false,
-  "status_code": 400,
-  "message": "Email já cadastrado"
 }
 ```
 
