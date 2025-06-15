@@ -1,4 +1,4 @@
-const curtidaDAO = require('../model/DAO/curtidas.js')
+const curtidaDAO = require('../model/DAO/votos.js')
 
 const inserirComentario = async function (ocorrencia, contentType) {
     try {
