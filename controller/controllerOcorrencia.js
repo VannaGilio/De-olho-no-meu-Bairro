@@ -7,6 +7,7 @@ const controllerCategoria  = require('../controller/controllerCategoria.js')
 const controllerEndereco   = require('../controller/controllerEndereco.js')
 const controllerMidia      = require('../controller/controllerMidia.js')
 const controllerComentario = require('../controller/controllerComentarios.js')
+const controllerVoto       = require('../controller/controllerVoto.js')
 
 const inserirOcorrencia = async function (ocorrencia, contentType) {
     try {
@@ -160,6 +161,9 @@ const listarOcorrencia = async function () {
 
                     let dadosComentario = await controllerComentario.buscarComentariosByIdOcorrencia(itemOcorrencia.id_ocorrencia)
                     itemOcorrencia.comentarios = dadosComentario.comments
+
+                    let dadosVoto = await controllerVoto.buscarVotoPorOcorrencia(itemOcorrencia.id_ocorrencia)
+                    itemOcorrencia.votos = dadosVoto.itens
 
                     arrayOcorrencia.push(itemOcorrencia)
                 }

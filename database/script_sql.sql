@@ -89,3 +89,18 @@ CREATE TABLE tbl_comentarios (
     FOREIGN KEY (id_usuario) 
     REFERENCES tbl_usuario(id_usuario)
 );
+
+CREATE TABLE tbl_votos (
+    id_voto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    data_voto DATE NOT NULL,
+    id_usuario INT NOT NULL,
+    id_ocorrencia INT NOT NULL,
+
+    CONSTRAINT fk_tbl_voto_tbl_usuarios1
+    FOREIGN KEY (id_usuario)
+    REFERENCES tbl_usuario (id_usuario),
+    
+    CONSTRAINT fk_tbl_voto_tbl_ocorrencias1
+    FOREIGN KEY (id_ocorrencia)
+    REFERENCES tbl_ocorrencias (id_ocorrencia)
+)

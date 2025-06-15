@@ -31,6 +31,7 @@ const controllerStatus = require('./controller/controllerStatus.js')
 const controllerOcorrencias = require('./controller/controllerOcorrencia.js')
 const controllerMidias = require('./controller/controllerMidia.js')
 const controllerComentarios = require('./controller/controllerComentarios.js')
+const controllerVotos = require('./controller/controllerVoto.js')
 
 //---------------------------------------------USUARIO-------------------------------------------------------
 
@@ -389,6 +390,36 @@ app.get('/v1/controle-usuario/comentario-por-ocorrencia/:id', cors(), async func
 
     let idComentario = request.params.id
     let result = await controllerComentarios.buscarComentariosByIdOcorrencia(idComentario)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+//---------------------------------------------VOTO-------------------------------------------------------
+
+app.post('/v1/controle-usuario/voto', cors(), bodyParserJSON, async function (request, response) {
+
+    let contentType = request.headers['content-type']
+    let dadosBody = request.body
+
+    let result = await controllerVotos.inserirVoto(dadosBody, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/controle-usuario/voto/:id', cors(), async function (request, response) {
+    let idVoto = request.params.id
+    let result = await controllerVotos.excluirVoto(idVoto)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.post('/v1/controle-usuario/buscar-voto', cors(), async function (request, response) {
+    let voto = request.body
+
+    let result = await controllerVotos.buscarVoto(voto)
 
     response.status(result.status_code)
     response.json(result)
