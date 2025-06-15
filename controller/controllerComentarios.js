@@ -2,9 +2,6 @@ const message = require('../modulo/config.js')
 const comentarioDAO = require('../model/DAO//comentarios.js')
 
 const controllerUsuario    = require('../controller/controllerUsuario.js')
-const controllerOcorrencia     = require('../controller/controllerOcorrencia.js')
-
-
 
 const inserirComentario = async function (ocorrencia, contentType) {
     try {
@@ -106,6 +103,7 @@ const listarComentario = async function () {
         let dadosComentario = {}
 
         let result = await comentarioDAO.selectAllComentario()
+        console.log(result)
 
         if (result != false || typeof (result) == 'object') {
             if (result.length > 0) {
@@ -117,10 +115,6 @@ const listarComentario = async function () {
                     let dadosUsuario = await controllerUsuario.buscarUsuario(itemComentario.id_usuario)
                     itemComentario.usuario = dadosUsuario.users
                     delete itemComentario.id_usuario
-
-                    let dadosOcorrencia = await controllerOcorrencia.buscarOcorrencia(itemComentario.id_ocorrencia)
-                    itemComentario.ocorrencia = dadosOcorrencia.ocorrencia
-                    delete itemComentario.id_ocorrencia
 
                     arrayComentario.push(itemComentario)
                 }
